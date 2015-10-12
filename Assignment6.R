@@ -5,6 +5,7 @@ library(qualityTools)
 # create a vector of w exponential waiting times with lambda = lam
 ### create a random vector which is ~Exponential Distribution and length is w
 wait <- function(w,lam){
+  if(w<=0||lam<=0)stop("invalid input")
   a = NULL
   for(i in 1:w){
     a = c(a,rexp(1,rate = lam))
@@ -19,6 +20,7 @@ wait(10,5)
 ### create a random vector which is ~Exponential Distribution and the sum of them is less than Max
 wait.until <- function(Max,lam){
   #set.seed(50)
+  if(Max<=0||lam<=0)stop("invalid input")
   time = 0
   a = NULL
   while(time < Max){
@@ -39,6 +41,7 @@ wait.until(10,5)
 ### create a random vector which is a number of cumulation  of the sum of a vector from Exponential distribution given certain Maximum
 poi.test <- function(rep, Max, lam){
   #set.seed(50)
+  if(Max<=0||lam<=0||rep<=0)stop("invalid input")
   a = NULL
   for(i in 1:rep){
     q = wait.until(Max,lam)
@@ -53,6 +56,7 @@ poi.test(20,2,4)
 # now simlate the waiting time for k events to occur with lambda = lam
 ### create a number which is the sum of a vector from Exponential Distribution given size k
 wait.for <- function(k, lam){
+  if(k<=0||lam<=0)stop("invalid input")
   time = 0
   count = 0
   a = NULL
@@ -68,6 +72,7 @@ wait.for(10,5)
 
 ###a vector with size rep & which is from a sum of a vector from Exponential Distribution given size k
 gam.test <-function(rep, max.e, lam ){
+  if(max.e<=0||lam<=0||rep<=0)stop("invalid input")
   a=NULL
   for (i in 1:rep){
     t = wait.for(max.e,lam)
