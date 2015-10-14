@@ -58,12 +58,23 @@ wait.until <- function(Max,lam)## create a vector which is Exponential Distribut
   return(b[1:(length(b)-1)])  
 }
 ##test
-mixfunc("exp",10,5)
-mixfunc("gam",10,5,10)
-mixfunc("poi",10,5,10)
+mixfunc("exp",1000,5)
+mixfunc("gam",1000,5,10)
+mixfunc("poi",1000,5,10)
 ##default test
 mixfunc("abc",10,5)#wrong type
 mixfunc("exp",0,-5)#wrong lambda&length
 mixfunc("poi",9,-5)#wrong lambda
 mixfunc("gam",10,5)#missing Max
 mixfunc("gam","t","u","m")#wrong input
+
+##plot the exp/poi/gam
+##plot of exp
+df1<-data.frame(mixfunc("exp",1000,5))
+ggplot(df1,aes(df1[,1]))+xlab("Exponential")+geom_histogram(aes(y=..density..),binwidth=.2,colour="black",fill="white")+geom_density(alpha=.2,fill="#FF6666")
+##plot of poission
+df2<-data.frame(mixfunc("gam",1000,5,10))
+ggplot(df2,aes(df2[,1]))+xlab("Poission")+geom_histogram(aes(y=..density..),binwidth=.2,colour="black",fill="white")+geom_density(alpha=.2,fill="#FF6666")
+##plot of gamma
+df3<-data.frame(mixfunc("poi",1000,5,10))
+ggplot(df3,aes(df3[,1]))+xlab("Gamma")+geom_histogram(aes(y=..density..),binwidth=.2,colour="black",fill="white")+geom_density(alpha=.2,fill="#FF6666")
