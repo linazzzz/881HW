@@ -39,7 +39,7 @@ mixfunc<-function(type,len,lam,Max=0)
     a=NULL
     for (i in 1:len)
     {
-      t = sum(rexp(Max,lam))## each element in gamma distribution is sum of Exponential Distribution with length Max
+      t = wait.for(Max,lam)## each element in gamma distribution is sum of Exponential Distribution with length Max
       a = c(a,t)
     }
     return(a)
@@ -57,6 +57,19 @@ wait.until <- function(Max,lam)## create a vector which is Exponential Distribut
   }
   return(b[1:(length(b)-1)])  
 }
+wait.for <- function(Max, lam)## create a vector which is sum of k(k=Max) Exponential Distribution
+{
+  time = 0
+  count = 0
+  a = NULL
+  while(count < Max){
+    inter=rexp(1,lam)
+    count = count + 1
+    time = time+inter
+  }
+  return(time)
+}
+
 ##test
 mixfunc("exp",1000,5)
 mixfunc("gam",1000,5,10)
