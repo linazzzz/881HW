@@ -54,8 +54,7 @@ data1<-data.frame(x=rain)
 data1<-subset(data1,data1$x!=0.00)
 head(data1)
 qplot(x, data=data1, geom = "histogram",binwidth=.3)
-
-## MEM
+ggplot(data=data1)+geom_histogram(aes(x),binwidth=.3)+labs(title="rain gauge distribution")
 mean(data1$x)
 var(data1$x)
 ## 2 parameters
@@ -70,16 +69,16 @@ gam<-function(x)
 data1$ga<-gam(data1$x)
 head(data1)
 ## plot of density & count 
-ggplot(data1,aes(x=data1$x))+geom_histogram(aes(y=..density..),binwidth=.5,colour="black",fill="white")+geom_density(alpha=.2,fill="#FF6666")
+ggplot(data1,aes(x=data1$x))+geom_histogram(aes(y=..density..),binwidth=.5,colour="black",fill="white")+labs(title="rain gauge distribution&density")+geom_density(alpha=.2,fill="#FF6666")
 ## plot of density function
-ggplot(data1,aes(x=data1$ga))+geom_histogram(aes(y=..density..),binwidth=.5,colour="black",fill="white")
+ggplot(data1,aes(x=data1$ga))+geom_histogram(aes(y=..density..),binwidth=.5,colour="black",fill="white")+labs(title="Gamma Function")
 ## plot of density 
-ggplot(data1,aes(x=data1$x))+geom_density(alpha=0.2,fill="#FF6666")
+ggplot(data1,aes(x=data1$x))+geom_density(alpha=0.2,fill="#FF6666")+labs(title="rain gauge density")
 
 ## bootstrap HW2
 n<-length(data1$x)
 B<-1000
-Tbootvar<-rep(0,B)
+Tbootalpha<-rep(0,B)
 Tbootlambda<-rep(0,B)
 for(i in 1:B){
   al.s<-sample(data1$x,n,replace=TRUE)
@@ -106,7 +105,7 @@ theta
 max.likelihood$par
 
 ## bootstrap MLE
-B2<-1000
+B2<-20000
 Tboot2alpha<-rep(0,B2)
 Tboot2lambda<-rep(0,B)
 minus.likelihood2 <- function(theta) {-(n*theta[1]*log(theta[2])-n*lgamma(theta[1])+(theta[1]-1)*sum(log(boot))-theta[2]*sum(boot))}
